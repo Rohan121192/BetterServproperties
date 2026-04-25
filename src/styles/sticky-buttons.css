@@ -1,0 +1,109 @@
+/* ── Sticky Floating Buttons ── */
+.sticky-btns {
+  position: fixed;
+  bottom: 100px;
+  right: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 9999;
+}
+
+.sticky-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  text-decoration: none;
+  font-size: 24px;
+  box-shadow: 0 6px 24px rgba(0,0,0,0.25);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  position: relative;
+}
+
+.sticky-btn:hover {
+  transform: scale(1.12);
+  box-shadow: 0 10px 32px rgba(0,0,0,0.35);
+}
+
+/* WhatsApp */
+.sticky-btn.wa {
+  background: #25D366;
+  color: #fff;
+}
+
+/* Call */
+.sticky-btn.call {
+  background: #1a66ff;
+  color: #fff;
+}
+
+/* Pulse ring animation */
+.sticky-btn::before {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 3px solid currentColor;
+  opacity: 0.4;
+  animation: pulse-ring 2s ease-out infinite;
+}
+
+.sticky-btn.wa::before  { border-color: #25D366; }
+.sticky-btn.call::before { border-color: #1a66ff; }
+
+@keyframes pulse-ring {
+  0%   { transform: scale(1);   opacity: 0.45; }
+  70%  { transform: scale(1.5); opacity: 0; }
+  100% { transform: scale(1.5); opacity: 0; }
+}
+
+/* Tooltip label */
+.sticky-btn .btn-tip {
+  position: absolute;
+  right: 68px;
+  background: #111;
+  color: #fff;
+  font-size: 13px;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 5px 12px;
+  border-radius: 6px;
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.sticky-btn .btn-tip::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 6px solid transparent;
+  border-left-color: #111;
+  border-right: none;
+}
+
+.sticky-btn:hover .btn-tip {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Push up above mobile nav on small screens */
+@media (max-width: 768px) {
+  .sticky-btns {
+    bottom: 80px;
+    right: 14px;
+  }
+
+  .sticky-btn {
+    width: 50px;
+    height: 50px;
+    font-size: 21px;
+  }
+}
