@@ -30,10 +30,32 @@ const CONTACTS = [
 
 export default function GetInTouchSection() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    data._subject = "New Lead: Get In Touch Section";
+
+    try {
+      await fetch("https://formsubmit.co/ajax/vishnuss860@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -75,31 +97,34 @@ export default function GetInTouchSection() {
               <p className="git-form-sub">Fill in the form and we'll get back to you within 24 hours.</p>
               <form className="git-form" onSubmit={handleSubmit} noValidate>
                 <div className="git-row2">
-                  <div className="fr"><label>First Name</label><input type="text" placeholder="John" required /></div>
-                  <div className="fr"><label>Last Name</label><input type="text" placeholder="Doe" /></div>
+                  <div className="fr">
+                    <label>First Name</label>
+                    <input type="text" name="firstName" placeholder="John" required />
+                  </div>
+                  <div className="fr">
+                    <label>Last Name</label>
+                    <input type="text" name="lastName" placeholder="Doe" />
+                  </div>
                 </div>
+
                 <div className="git-row2">
-                  <div className="fr"><label>Email</label><input type="email" placeholder="you@email.com" required /></div>
-                  <div className="fr"><label>Phone</label><input type="tel" placeholder="+971 or +91" /></div>
+                  <div className="fr">
+                    <label>Email Address</label>
+                    <input type="email" name="email" placeholder="john@example.com" required />
+                  </div>
+                  <div className="fr">
+                    <label>Phone Number</label>
+                    <input type="tel" name="phone" placeholder="+971 50..." required />
+                  </div>
                 </div>
-                <div className="fr">
-                  <label>Interested In</label>
-                  <select>
-                    <option>Select a service</option>
-                    <option>Buying in Dubai</option>
-                    <option>Buying in India</option>
-                    <option>Selling Property</option>
-                    <option>Investment Advisory</option>
-                    <option>Property Management</option>
-                    <option>Other</option>
-                  </select>
-                </div>
+
                 <div className="fr">
                   <label>Message</label>
-                  <textarea rows="4" placeholder="Tell us about your requirements..."></textarea>
+                  <textarea name="message" rows="4" placeholder="Tell us about your requirements..." required></textarea>
                 </div>
-                <button type="submit" className="btn btn-blue git-submit">
-                  <LuSend size={16} /> Send Message
+
+                <button type="submit" className="btn btn-blue git-submit" disabled={loading}>
+                  <LuSend size={16} /> {loading ? 'Sending...' : 'Send Message'}
                 </button>
               </form>
             </>

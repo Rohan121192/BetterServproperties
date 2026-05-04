@@ -2,10 +2,33 @@ import { useState } from 'react';
 
 export default function EnquiryModal({ isOpen, title, subtitle, onClose }) {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    // Add context about what they are enquiring about
+    data._subject = `New Enquiry: ${title}`;
+
+    try {
+      await fetch("https://formsubmit.co/ajax/vishnuss860@gmail.com", {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleClose = () => {
@@ -26,11 +49,13 @@ export default function EnquiryModal({ isOpen, title, subtitle, onClose }) {
           <>
             <p style={{ color: 'var(--text-mid)', fontSize: '0.88rem', marginBottom: '20px' }}>{subtitle}</p>
             <form onSubmit={handleSubmit}>
-              <div className="fr"><label>Name</label><input type="text" placeholder="Full name" /></div>
-              <div className="fr"><label>Email</label><input type="email" placeholder="you@email.com" /></div>
-              <div className="fr"><label>Phone</label><input type="tel" placeholder="+971 or +91" /></div>
-              <div className="fr"><label>Message</label><textarea rows="3" placeholder="I'm interested..."></textarea></div>
-              <button className="btn btn-blue" type="submit" style={{ width: '100%' }}>Submit Enquiry <span className="btn-icon">→</span></button>
+              <div className="fr"><label>Name</label><input type="text" name="name" placeholder="Full name" required /></div>
+              <div className="fr"><label>Email</label><input type="email" name="email" placeholder="you@email.com" required /></div>
+              <div className="fr"><label>Phone</label><input type="tel" name="phone" placeholder="+971 or +91" required /></div>
+              <div className="fr"><label>Message</label><textarea name="message" rows="3" placeholder="I'm interested..."></textarea></div>
+              <button className="btn btn-blue" type="submit" style={{ width: '100%' }} disabled={loading}>
+                {loading ? 'Sending...' : 'Submit Enquiry'} <span className="btn-icon">→</span>
+              </button>
             </form>
           </>
         ) : (

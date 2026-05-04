@@ -8,6 +8,7 @@ export default function WelcomePopup() {
   const [open,    setOpen]    = useState(false);   // controls CSS entrance
   const [submitted, setSubmitted] = useState(false);
   const [closing,   setClosing]   = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     // Only show once per browser session
@@ -40,9 +41,30 @@ export default function WelcomePopup() {
     }, 420);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    data._subject = "New Lead: Welcome Popup Form";
+
+    try {
+      await fetch("https://formsubmit.co/ajax/vishnuss860@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (!visible) return null;
@@ -78,40 +100,40 @@ export default function WelcomePopup() {
               <div className="wp-row2">
                 <div className="fr">
                   <label>First Name</label>
-                  <input type="text" placeholder="John" required />
+                  <input type="text" name="firstName" placeholder="John" required />
                 </div>
                 <div className="fr">
                   <label>Last Name</label>
-                  <input type="text" placeholder="Doe" />
+                  <input type="text" name="lastName" placeholder="Doe" />
                 </div>
               </div>
 
               <div className="wp-row2">
                 <div className="fr">
                   <label>Email</label>
-                  <input type="email" placeholder="you@email.com" required />
+                  <input type="email" name="email" placeholder="you@email.com" required />
                 </div>
                 <div className="fr">
                   <label>Phone</label>
-                  <input type="tel" placeholder="+971 or +91" />
+                  <input type="tel" name="phone" placeholder="+971 or +91" required />
                 </div>
               </div>
 
               <div className="fr">
                 <label>I'm Interested In</label>
-                <select>
-                  <option>Select a service</option>
-                  <option>Buying in Dubai</option>
-                  <option>Buying in India</option>
-                  <option>Selling Property</option>
-                  <option>Investment Advisory</option>
-                  <option>Property Management</option>
-                  <option>Other</option>
+                <select name="service_interest">
+                  <option value="Not specified">Select a service</option>
+                  <option value="Buying in Dubai">Buying in Dubai</option>
+                  <option value="Buying in India">Buying in India</option>
+                  <option value="Selling Property">Selling Property</option>
+                  <option value="Investment Advisory">Investment Advisory</option>
+                  <option value="Property Management">Property Management</option>
+                  <option value="Other">Other</option>
                 </select>
               </div>
 
-              <button type="submit" className="btn btn-blue wp-submit">
-                Get Free Consultation <span className="btn-icon">→</span>
+              <button type="submit" className="btn btn-blue wp-submit" disabled={loading}>
+                {loading ? 'Sending...' : 'Get Free Consultation'} <span className="btn-icon">→</span>
               </button>
 
               <p className="wp-privacy">

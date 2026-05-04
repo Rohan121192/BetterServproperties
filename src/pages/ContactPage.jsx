@@ -8,11 +8,33 @@ import { LuMapPin, LuPhone, LuMail, LuClock, LuMap } from 'react-icons/lu';
 
 export default function ContactPage() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   useScrollReveal();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
+
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+    data._subject = "New Lead: Contact Page";
+
+    try {
+      await fetch("https://formsubmit.co/ajax/vishnuss860@gmail.com", {
+        method: "POST",
+        headers: { 
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+      setSubmitted(true);
+    } catch (error) {
+      console.error(error);
+      alert("Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -82,31 +104,31 @@ export default function ContactPage() {
                   </h3>
                   <form onSubmit={handleSubmit}>
                     <div className="f2">
-                      <div className="fr"><label>First Name</label><input type="text" placeholder="John" /></div>
-                      <div className="fr"><label>Last Name</label><input type="text" placeholder="Doe" /></div>
+                      <div className="fr"><label>First Name</label><input type="text" name="firstName" placeholder="John" required /></div>
+                      <div className="fr"><label>Last Name</label><input type="text" name="lastName" placeholder="Doe" /></div>
                     </div>
                     <div className="f2">
-                      <div className="fr"><label>Email</label><input type="email" placeholder="you@email.com" /></div>
-                      <div className="fr"><label>Phone</label><input type="tel" placeholder="+971 or +91" /></div>
+                      <div className="fr"><label>Email</label><input type="email" name="email" placeholder="you@email.com" required /></div>
+                      <div className="fr"><label>Phone</label><input type="tel" name="phone" placeholder="+971 or +91" required /></div>
                     </div>
                     <div className="fr">
                       <label>Interested In</label>
-                      <select>
-                        <option>Select a service</option>
-                        <option>Buying in Dubai</option>
-                        <option>Buying in India</option>
-                        <option>Selling Property</option>
-                        <option>Investment Advisory</option>
-                        <option>Property Management</option>
-                        <option>Other</option>
+                      <select name="service_interest">
+                        <option value="Not specified">Select a service</option>
+                        <option value="Buying in Dubai">Buying in Dubai</option>
+                        <option value="Buying in India">Buying in India</option>
+                        <option value="Selling Property">Selling Property</option>
+                        <option value="Investment Advisory">Investment Advisory</option>
+                        <option value="Property Management">Property Management</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                     <div className="fr">
                       <label>Message</label>
-                      <textarea rows="4" placeholder="Tell us about your requirements..."></textarea>
+                      <textarea name="message" rows="4" placeholder="Tell us about your requirements..."></textarea>
                     </div>
-                    <button type="submit" className="btn btn-blue" style={{ width: '100%' }}>
-                      Send Message <span className="btn-icon">→</span>
+                    <button type="submit" className="btn btn-blue" style={{ width: '100%' }} disabled={loading}>
+                      {loading ? 'Sending...' : 'Send Message'} <span className="btn-icon">→</span>
                     </button>
                   </form>
                 </>
