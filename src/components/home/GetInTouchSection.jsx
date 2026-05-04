@@ -38,7 +38,14 @@ export default function GetInTouchSection() {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+    
+    if (data._honey) {
+      setLoading(false);
+      return;
+    }
+
     data._subject = "New Lead: Get In Touch Section";
+    data._captcha = "false";
 
     try {
       await fetch("https://formsubmit.co/ajax/vishnuss860@gmail.com", {
@@ -96,6 +103,7 @@ export default function GetInTouchSection() {
               <h3 className="git-form-title">Send Us a Message</h3>
               <p className="git-form-sub">Fill in the form and we'll get back to you within 24 hours.</p>
               <form className="git-form" onSubmit={handleSubmit} noValidate>
+                <input type="text" name="_honey" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
                 <div className="git-row2">
                   <div className="fr">
                     <label>First Name</label>

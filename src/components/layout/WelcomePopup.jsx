@@ -47,7 +47,14 @@ export default function WelcomePopup() {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+    
+    if (data._honey) {
+      setLoading(false);
+      return;
+    }
+
     data._subject = "New Lead: Welcome Popup Form";
+    data._captcha = "false";
 
     try {
       await fetch("https://formsubmit.co/ajax/vishnuss860@gmail.com", {
@@ -97,6 +104,7 @@ export default function WelcomePopup() {
 
             {/* Form body */}
             <form className="wp-form" onSubmit={handleSubmit} noValidate>
+              <input type="text" name="_honey" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
               <div className="wp-row2">
                 <div className="fr">
                   <label>First Name</label>

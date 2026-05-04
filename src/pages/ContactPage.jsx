@@ -17,7 +17,14 @@ export default function ContactPage() {
 
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
+
+    if (data._honey) {
+      setLoading(false);
+      return;
+    }
+
     data._subject = "New Lead: Contact Page";
+    data._captcha = "false";
 
     try {
       await fetch("https://formsubmit.co/ajax/vishnuss860@gmail.com", {
@@ -103,6 +110,7 @@ export default function ContactPage() {
                     Send Us a Message
                   </h3>
                   <form onSubmit={handleSubmit}>
+                    <input type="text" name="_honey" style={{ display: 'none' }} tabIndex="-1" autoComplete="off" />
                     <div className="f2">
                       <div className="fr"><label>First Name</label><input type="text" name="firstName" placeholder="John" required /></div>
                       <div className="fr"><label>Last Name</label><input type="text" name="lastName" placeholder="Doe" /></div>
