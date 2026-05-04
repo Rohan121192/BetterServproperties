@@ -6,6 +6,7 @@ import Footer from './components/layout/Footer';
 import Loader from './components/layout/Loader';
 import StickyButtons from './components/layout/StickyButtons';
 import EnquiryModal from './components/shared/EnquiryModal';
+import WelcomePopup from './components/layout/WelcomePopup';
 
 export default function App() {
   const [modalState, setModalState] = useState({ isOpen: false, title: '', subtitle: '' });
@@ -27,6 +28,7 @@ export default function App() {
   return (
     <>
       <Loader />
+      <WelcomePopup />
       <Header />
       <MobileNav />
       
