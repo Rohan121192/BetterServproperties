@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { LuBuilding2, LuLock, LuCheck } from 'react-icons/lu';
 
 const SESSION_KEY = 'bsp_welcome_seen';
 
@@ -62,7 +63,10 @@ export default function WelcomePopup() {
           <>
             {/* Header strip */}
             <div className="wp-head">
-              <div className="wp-badge">🏙️ Welcome</div>
+              <div className="wp-badge">
+                <LuBuilding2 size={14} style={{ marginRight: '6px', verticalAlign: 'text-top' }} />
+                Welcome
+              </div>
               <h2 className="wp-title">Find Your Dream Property</h2>
               <p className="wp-sub">
                 Let our experts guide you — Dubai &amp; India's finest real estate, hand-picked for you.
@@ -110,13 +114,18 @@ export default function WelcomePopup() {
                 Get Free Consultation <span className="btn-icon">→</span>
               </button>
 
-              <p className="wp-privacy">🔒 We respect your privacy. No spam, ever.</p>
+              <p className="wp-privacy">
+                <LuLock size={14} style={{ marginRight: '6px', verticalAlign: 'text-top' }} />
+                We respect your privacy. No spam, ever.
+              </p>
             </form>
           </>
         ) : (
           /* Success state */
           <div className="wp-success">
-            <div className="wp-tick">✓</div>
+            <div className="wp-tick">
+              <LuCheck size={32} />
+            </div>
             <h3>You're All Set!</h3>
             <p>Our team will reach out within 24 hours.<br />This window closes automatically.</p>
             <div className="wp-countdown-bar">

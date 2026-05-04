@@ -1,17 +1,31 @@
 import { useRef, useState } from 'react';
-import { LuMapPin, LuChevronLeft, LuChevronRight, LuTag, LuBuilding2 } from 'react-icons/lu';
+import { LuMapPin, LuChevronLeft, LuChevronRight, LuTag, LuBuilding2, LuFlame, LuStar, LuLeaf, LuTreePine, LuTrophy } from 'react-icons/lu';
 import { LAUNCHES } from '../../data/launches';
 import SectionWrapper from '../shared/SectionWrapper';
 import ScrollReveal from '../shared/ScrollReveal';
 
+const BADGE_ICONS = {
+  'New Launch': LuFlame,
+  'Premium': LuStar,
+  'Eco Living': LuLeaf,
+  'Nature': LuTreePine,
+  'High Rise': LuBuilding2,
+  'Best Seller': LuTrophy,
+};
+
 function LaunchCard({ project, onEnquire }) {
+  const BadgeIcon = BADGE_ICONS[project.badge] || LuStar;
   return (
     <div className="lc-card">
       <div className="lc-img-wrap">
         <img src={project.img} alt={project.name} loading="lazy" />
-        <span className="lc-badge">{project.badge}</span>
+        <span className="lc-badge">
+          <BadgeIcon size={12} style={{ marginRight: '4px', display: 'inline-block', verticalAlign: 'middle' }} />
+          {project.badge}
+        </span>
         <span className={`lc-region-tag ${project.region}`}>
-          {project.region === 'dubai' ? '🇦🇪 Dubai' : '🇮🇳 India'}
+          <LuMapPin size={12} style={{ marginRight: '4px', display: 'inline-block', verticalAlign: 'middle' }} />
+          {project.region === 'dubai' ? 'Dubai' : 'India'}
         </span>
       </div>
       <div className="lc-body">
@@ -79,7 +93,7 @@ export default function LatestLaunchesSlider({ onEnquire }) {
               className={`lc-filter-btn${filter === f ? ' active' : ''}`}
               onClick={() => setFilter(f)}
             >
-              {f === 'all' ? 'All Projects' : f === 'dubai' ? '🇦🇪 Dubai' : '🇮🇳 India'}
+              {f === 'all' ? 'All Projects' : f === 'dubai' ? 'Dubai' : 'India'}
             </button>
           ))}
         </ScrollReveal>

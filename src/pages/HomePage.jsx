@@ -39,7 +39,7 @@ export default function HomePage() {
       <SectionWrapper bg="var(--bg)">
         <div className="section-hdr-row">
           <ScrollReveal>
-            <span className="section-region-tag dubai-tag">🇦🇪 Dubai</span>
+            <span className="section-region-tag dubai-tag">Dubai</span>
             <h2 className="section-title" style={{ marginBottom: 0 }}>Dubai Properties</h2>
           </ScrollReveal>
           <ScrollReveal delay={2}>
@@ -57,7 +57,7 @@ export default function HomePage() {
       <SectionWrapper bg="var(--bg-alt)">
         <div className="section-hdr-row">
           <ScrollReveal>
-            <span className="section-region-tag india-tag">🇮🇳 India</span>
+            <span className="section-region-tag india-tag">India</span>
             <h2 className="section-title" style={{ marginBottom: 0 }}>Indian Properties</h2>
           </ScrollReveal>
           <ScrollReveal delay={2}>
@@ -78,7 +78,7 @@ export default function HomePage() {
       <SectionWrapper bg="var(--bg-alt)">
         <div style={{ textAlign: 'center' }}>
           <ScrollReveal>
-            <span className="section-region-tag dubai-tag" style={{ display: 'inline-flex', marginBottom: '10px' }}>🇦🇪 Dubai</span>
+            <span className="section-region-tag dubai-tag" style={{ display: 'inline-flex', marginBottom: '10px' }}>Dubai</span>
             <h2 className="section-title">Trusted Dubai Developers</h2>
           </ScrollReveal>
           <ScrollReveal delay={1}>
@@ -94,7 +94,7 @@ export default function HomePage() {
       <SectionWrapper bg="var(--bg)">
         <div style={{ textAlign: 'center' }}>
           <ScrollReveal>
-            <span className="section-region-tag india-tag" style={{ display: 'inline-flex', marginBottom: '10px' }}>🇮🇳 India</span>
+            <span className="section-region-tag india-tag" style={{ display: 'inline-flex', marginBottom: '10px' }}>India</span>
             <h2 className="section-title">Trusted Indian Developers</h2>
           </ScrollReveal>
           <ScrollReveal delay={1}>
