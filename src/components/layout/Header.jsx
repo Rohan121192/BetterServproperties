@@ -2,10 +2,16 @@ import { NavLink, Link } from 'react-router-dom';
 import { useHeaderScroll } from '../../hooks/useHeaderScroll';
 
 export default function Header() {
-  const scrolled = useHeaderScroll(60);
+  const { scrolled, hidden } = useHeaderScroll(60);
+
+  const cls = [
+    'cap-hdr',
+    scrolled ? 'scrolled' : '',
+    hidden   ? 'hidden'   : '',
+  ].filter(Boolean).join(' ');
 
   return (
-    <header className={`cap-hdr${scrolled ? ' scrolled' : ''}`} id="mainHeader">
+    <header className={cls} id="mainHeader">
       <Link to="/" className="logo">
         <img src="/logo.png" alt="Better Serv Logo" />
       </Link>

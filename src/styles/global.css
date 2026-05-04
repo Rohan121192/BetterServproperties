@@ -192,7 +192,11 @@ button {
   align-items: center;
   gap: 12px;
   width: 100%;
-  transition: background 0.35s ease, box-shadow 0.35s ease;
+  transform: translateY(0);
+  transition:
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.38s cubic-bezier(0.4, 0, 0.2, 1);
   border: none;
   border-radius: 0;
   backdrop-filter: none;
@@ -200,9 +204,15 @@ button {
   box-shadow: none;
 }
 
+/* Dark background when user has scrolled past threshold */
 .cap-hdr.scrolled {
   background: rgba(10, 10, 15, 0.97);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.4);
+}
+
+/* Slide header off the top when user scrolls DOWN */
+.cap-hdr.hidden {
+  transform: translateY(-100%);
 }
 
 .cap-hdr .logo {
@@ -327,6 +337,10 @@ button {
 
   .cap-hdr.scrolled {
     background: rgba(10, 10, 15, 0.98);
+  }
+
+  .cap-hdr.hidden {
+    transform: translateY(-100%);
   }
 
   .cap-hdr .logo {
