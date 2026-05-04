@@ -1,17 +1,23 @@
 import { useEffect } from 'react';
 import { Link, useOutletContext } from 'react-router-dom';
-import HeroSection from '../components/home/HeroSection';
-import AboutSnippet from '../components/home/AboutSnippet';
-import ServicesGrid from '../components/home/ServicesGrid';
-import PropertySlider from '../components/shared/PropertySlider';
-import WhyUsGrid from '../components/home/WhyUsGrid';
-import StatsBar from '../components/home/StatsBar';
-import DeveloperSlider from '../components/shared/DeveloperSlider';
-import ProcessTimeline from '../components/home/ProcessTimeline';
-import TestimonialsGrid from '../components/home/TestimonialsGrid';
-import CtaSection from '../components/shared/CtaSection';
+
+/* ── Layout / Shared ── */
 import SectionWrapper from '../components/shared/SectionWrapper';
 import ScrollReveal from '../components/shared/ScrollReveal';
+import PropertySlider from '../components/shared/PropertySlider';
+import DeveloperSlider from '../components/shared/DeveloperSlider';
+
+/* ── Home sections ── */
+import HeroSection from '../components/home/HeroSection';
+import LatestLaunchesSlider from '../components/home/LatestLaunchesSlider';
+import ProcessTimeline from '../components/home/ProcessTimeline';
+import WhyUsGrid from '../components/home/WhyUsGrid';
+import StatsBar from '../components/home/StatsBar';
+import CeoAboutSection from '../components/home/CeoAboutSection';
+import TestimonialsGrid from '../components/home/TestimonialsGrid';
+import CtaSection from '../components/shared/CtaSection';
+
+/* ── Data ── */
 import { DP, IP } from '../data/properties';
 import { DD, ID } from '../data/developers';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -22,74 +28,103 @@ export default function HomePage() {
 
   return (
     <main className="page">
-      <HeroSection />
-      <AboutSnippet />
-      <ServicesGrid />
 
-      {/* Dubai Properties Slider */}
+      {/* ── 1. HERO ── */}
+      <HeroSection />
+
+      {/* ── 2. LATEST LAUNCHES ── */}
+      <LatestLaunchesSlider onEnquire={openModal} />
+
+      {/* ── 3. DUBAI PROJECTS ── */}
       <SectionWrapper bg="var(--bg)">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '16px', marginBottom: '36px' }}>
+        <div className="section-hdr-row">
           <ScrollReveal>
+            <span className="section-region-tag dubai-tag">🇦🇪 Dubai</span>
             <h2 className="section-title" style={{ marginBottom: 0 }}>Dubai Properties</h2>
           </ScrollReveal>
           <ScrollReveal delay={2}>
-            <Link to="/dubai" className="btn btn-outline-dark">View All <span className="btn-icon">→</span></Link>
+            <Link to="/dubai" className="btn btn-outline-dark">
+              View All <span className="btn-icon">→</span>
+            </Link>
           </ScrollReveal>
         </div>
         <ScrollReveal delay={3}>
-          <PropertySlider properties={DP.filter(p => p.m === 'buy')} id="hs1" onEnquire={openModal} />
+          <PropertySlider properties={DP.filter(p => p.m === 'buy')} id="hs-dp" onEnquire={openModal} />
         </ScrollReveal>
       </SectionWrapper>
 
-      {/* India Properties Slider */}
+      {/* ── 4. INDIA PROJECTS ── */}
       <SectionWrapper bg="var(--bg-alt)">
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: '16px', marginBottom: '36px' }}>
+        <div className="section-hdr-row">
           <ScrollReveal>
-            <h2 className="section-title" style={{ marginBottom: 0 }}>India Properties</h2>
+            <span className="section-region-tag india-tag">🇮🇳 India</span>
+            <h2 className="section-title" style={{ marginBottom: 0 }}>Indian Properties</h2>
           </ScrollReveal>
           <ScrollReveal delay={2}>
-            <Link to="/india" className="btn btn-outline-dark">View All <span className="btn-icon">→</span></Link>
+            <Link to="/india" className="btn btn-outline-dark">
+              View All <span className="btn-icon">→</span>
+            </Link>
           </ScrollReveal>
         </div>
         <ScrollReveal delay={3}>
-          <PropertySlider properties={IP.filter(p => p.m === 'buy')} id="hs2" onEnquire={openModal} />
+          <PropertySlider properties={IP.filter(p => p.m === 'buy')} id="hs-ip" onEnquire={openModal} />
         </ScrollReveal>
       </SectionWrapper>
 
-      <WhyUsGrid />
-      <StatsBar />
+      {/* ── 5. OUR PROCESS ── */}
+      <ProcessTimeline />
 
-      {/* Developers */}
+      {/* ── 6. DUBAI DEVELOPERS ── */}
       <SectionWrapper bg="var(--bg-alt)">
         <div style={{ textAlign: 'center' }}>
           <ScrollReveal>
-            <h2 className="section-title">Global Real Estate Developers</h2>
+            <span className="section-region-tag dubai-tag" style={{ display: 'inline-flex', marginBottom: '10px' }}>🇦🇪 Dubai</span>
+            <h2 className="section-title">Trusted Dubai Developers</h2>
           </ScrollReveal>
-          <ScrollReveal delay={2}>
-            <p className="section-subtitle" style={{ margin: '0 auto 40px' }}>
-              Better Serv Properties is a preferred partner for world-class developers across Dubai and India.
+          <ScrollReveal delay={1}>
+            <p className="section-subtitle" style={{ margin: '0 auto 36px' }}>
+              We are a preferred partner for the UAE's leading property developers.
             </p>
           </ScrollReveal>
-
-          <div className="dev-block">
-            <span className="dev-slider-label">Dubai Developers</span>
-            <DeveloperSlider developers={DD} id="hs3" onEnquire={openModal} />
-          </div>
-          <div className="dev-block">
-            <span className="dev-slider-label">India Developers</span>
-            <DeveloperSlider developers={ID} id="hs4" onEnquire={openModal} />
-          </div>
+          <DeveloperSlider developers={DD} id="hs-dd" onEnquire={openModal} />
         </div>
       </SectionWrapper>
 
-      <ProcessTimeline />
+      {/* ── 7. INDIA DEVELOPERS ── */}
+      <SectionWrapper bg="var(--bg)">
+        <div style={{ textAlign: 'center' }}>
+          <ScrollReveal>
+            <span className="section-region-tag india-tag" style={{ display: 'inline-flex', marginBottom: '10px' }}>🇮🇳 India</span>
+            <h2 className="section-title">Trusted Indian Developers</h2>
+          </ScrollReveal>
+          <ScrollReveal delay={1}>
+            <p className="section-subtitle" style={{ margin: '0 auto 36px' }}>
+              Partnered with India's most reputed and awarded real estate groups.
+            </p>
+          </ScrollReveal>
+          <DeveloperSlider developers={ID} id="hs-id" onEnquire={openModal} />
+        </div>
+      </SectionWrapper>
+
+      {/* ── 8. WHY US ── */}
+      <WhyUsGrid />
+
+      {/* ── 9. STATS ── */}
+      <StatsBar />
+
+      {/* ── 10. CEO / ABOUT ── */}
+      <CeoAboutSection />
+
+      {/* ── 11. TESTIMONIALS ── */}
       <TestimonialsGrid />
 
+      {/* ── 11. CTA SECTION ── */}
       <CtaSection
         tag="Get Started"
         title="Ready to Find Your Dream Home?"
         subtitle="Let our experts guide you to the perfect property."
       />
+
     </main>
   );
 }
